@@ -1,0 +1,2 @@
+# ignore everything except lcm type specifications
+!*.lcm
