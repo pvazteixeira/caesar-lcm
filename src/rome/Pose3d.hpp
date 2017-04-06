@@ -1,3 +1,7 @@
+#pragma once
+
+#include <Eigen/Dense>
+
 namespace RoME{
 
   class Pose3d {

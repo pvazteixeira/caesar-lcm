@@ -21,19 +21,51 @@ void RoME::AddPose(const Pose3d &pose, const int pose_id) const {
 
 void RoME::AddPartialXYH(const Pose2d &rel_pose, const int origin_id,
                          const int dest_id) const {
-    // rename AddPartial2D(...)?
+  // rename AddPartial2D(...)?
+  rome::pose_pose_xyh_t message;
+
+  message.utime = 0;
+  message.node_1_utime = message.node_2_utime = 0;
+  message.node_1_id = origin_id;
+  message.node_2_id = dest_id;
+  message.delta_x = rel_pose.x();
+  message.delta_y = rel_pose.y();
+  message.delta_yaw = rel_pose.yaw();
+
+  message.var_x = message.var_y = message.var_yaw = 1.0;
+
+  lcm::LCM lcm_node;
+  lcm_node.publish("ROME_FACTORS", &message);
 };
 
-void RoME::AddPriorZPR(double z, double pitch, double roll,
-                       const Eigen::Matrix3d &Sigma, const int pose_id) const {
-    // adds a prior in Z, pitch, and roll
+void RoME::AddPriorZPR(double z, double pitch, double roll, double var_z,
+                       double var_pitch, double var_roll,
+                       const int pose_id) const {
+  // adds a prior in Z, pitch, and roll
+  rome::prior_zpr_t message;
+
+  message.utime = 0;
+  message.id = pose_id;
+  message.z = z;
+  message.pitch = pitch;
+  message.roll = roll;
+  message.var_z = var_z;
+  message.var_pitch = var_pitch;
+  message.var_roll = var_roll;
+
+  lcm::LCM lcm_node;
+  lcm_node.publish("ROME_FACTORS", &message);
 };
 
 void RoME::AddPose3Pose3NH(const Eigen::Vector3d &rel_position,
                            const Eigen::Quaterniond &rel_orientation,
                            const Eigen::MatrixXd &Sigma, const int origin_id,
                            const int dest_id) const {
-    // will be implemented
+  // will be implemented
+  rome::pose_pose_nh_t message;
+
+  lcm::LCM lcm_node;
+  lcm_node.publish("ROME_FACTORS", &message);
 };
 
 void RoME::AddCloud(pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud,

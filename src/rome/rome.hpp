@@ -12,6 +12,7 @@
 
 #include <pcl/point_types.h>
 
+#include "Pose2d.hpp"
 #include "Pose3d.hpp"
 #include <lcmtypes/rome.hpp>
 // let's try and keep this stateless, yes?
@@ -20,24 +21,6 @@
 // [[file+emacs:~/.julia/v0.5/Caesar/examples/database/python/neo4j_interact.py][neo4j_interact.py]]
 
 namespace RoME {
-
-class Pose2d {
-public:
-  Pose2d() {
-    position_ << 0.0, 0.0;
-    yaw_ = 0.0;
-  };
-  Pose2d(double x, double y, double yaw) {
-    position_ << x, y;
-    yaw_ = yaw;
-  };
-
-private:
-  Eigen::Vector2d position_;
-  double yaw_;
-};
-
-class Noise {};
 
 class RoME {
 
@@ -50,8 +33,8 @@ public:
   void AddPartialXYH(const Pose2d &rel_pose, const int origin_id,
                      const int dest_id) const;
 
-  void AddPriorZPR(double z, double pitch, double roll,
-                   const Eigen::Matrix3d &Sigma, const int pose_id) const;
+  void AddPriorZPR(double z, double pitch, double roll, double var_z,
+                   double var_pitch, double var_roll, const int pose_id) const;
 
   void AddPose3Pose3NH(const Eigen::Vector3d &rel_position,
                        const Eigen::Quaterniond &rel_orientation,
