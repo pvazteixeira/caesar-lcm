@@ -24,8 +24,8 @@ class Noise {};
 class RoME {
 
 public:
-  RoME();
-  ~RoME();
+  RoME(){};
+  ~RoME(){};
 
   void AddPose(const Eigen::Vector3d &position,
                const Eigen::Quaterniond &orientation, const int pose_id) const;

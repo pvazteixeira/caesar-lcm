@@ -14,6 +14,6 @@
 
 int main(int argCount, char **argValues) {
   
-  RoME rome; 
+  RoME::RoME rome; 
 
 }
