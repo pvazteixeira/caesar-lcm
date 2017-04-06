@@ -7,11 +7,15 @@ set(LIBRARY_NAME rome)
 add_library(${LIBRARY_NAME} SHARED ${implementation_files})
 
 # 1. cmake-supported libraries
-# find_package(PkgConfig REQUIRED)
-# find_package(PCL REQUIRED )
-# include_directories(${PCL_INCLUDE_DIRS})
-# link_directories(${PCL_LIBRARY_DIRS})
-# add_definitions(${PCL_DEFINITIONS})
+find_package(PkgConfig REQUIRED)
+find_package(PCL 1.7 REQUIRED )
+message("PCL_FOUND=${PCL_FOUND}")
+message("PCL_INCLUDE_DIRS=${PCL_INCLUDE_DIRS}")
+message("PCL_LIBRARY_DIRS=${PCL_LIBRARY_DIRS}")
+message("PCL_DEFINITIONS=${PCL_DEFINITIONS}")
+include_directories(${PCL_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
 
 # 2. non-pkg-config libraries
 # set(REQUIRED_LIBS $F
