@@ -19,6 +19,30 @@ void RoME::AddPose(const Pose3d &pose, const int pose_id) const {
   lcm_node.publish("ROME_POSES", &pose_message);
 }
 
+void RoME::AddOdometry(const Pose3d &delta_pose, const int origin_id,
+                       const int destination_id) const {
+  rome::pose_pose_nh_t message;
+  message.utime = 0;
+
+  message.node_1_utime = 0;
+  message.node_1_id = origin_id;
+  
+  message.node_2_utime = 0;
+  message.node_2_id = destination_id;
+
+  message.mean_dim = 7;
+  std::vector<double> odometry= delta_pose.Vector();
+  message.mean = odometry;
+  message.covar_dim = 6;
+  std::vector<double> covar_diag = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+  message.covar = covar_diag;
+
+  message.confidence = 1.0;
+
+  lcm::LCM lcm_node;
+  lcm_node.publish("ROME_FACTORS", &message);
+};
+
 void RoME::AddPartialXYH(const Pose2d &rel_pose, const int origin_id,
                          const int dest_id) const {
   // rename AddPartial2D(...)?

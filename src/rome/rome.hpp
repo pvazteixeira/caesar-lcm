@@ -30,6 +30,9 @@ public:
 
   void AddPose(const Pose3d &pose, const int pose_id) const;
 
+  void AddOdometry(const Pose3d &delta_pose, const int origin_id,
+                   const int destination_id) const;
+
   void AddPartialXYH(const Pose2d &rel_pose, const int origin_id,
                      const int dest_id) const;
 
