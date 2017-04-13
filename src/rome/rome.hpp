@@ -33,11 +33,10 @@ public:
   void AddOdometry(const Pose3d &delta_pose, const int origin_id,
                    const int destination_id) const;
 
-  void AddPartialXYH(const Pose2d &rel_pose, const int origin_id,
-                     const int dest_id) const;
+  void AddPartialXYH(const Eigen::Vector3d &rel_pose, const int origin_id,
+                           const int dest_id) const ;
 
-  void AddPriorZPR(double z, double pitch, double roll, double var_z,
-                   double var_pitch, double var_roll, const int pose_id) const;
+  void AddPriorZPR(const Eigen::Vector3d &v, const int pose_id) const ;
 
   void AddPose3Pose3NH(const Eigen::Vector3d &rel_position,
                        const Eigen::Quaterniond &rel_orientation,

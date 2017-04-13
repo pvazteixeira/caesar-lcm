@@ -26,12 +26,12 @@ void RoME::AddOdometry(const Pose3d &delta_pose, const int origin_id,
 
   message.node_1_utime = 0;
   message.node_1_id = origin_id;
-  
+
   message.node_2_utime = 0;
   message.node_2_id = destination_id;
 
   message.mean_dim = 7;
-  std::vector<double> odometry= delta_pose.Vector();
+  std::vector<double> odometry = delta_pose.Vector();
   message.mean = odometry;
   message.covar_dim = 6;
   std::vector<double> covar_diag = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
@@ -43,7 +43,7 @@ void RoME::AddOdometry(const Pose3d &delta_pose, const int origin_id,
   lcm_node.publish("ROME_FACTORS", &message);
 };
 
-void RoME::AddPartialXYH(const Pose2d &rel_pose, const int origin_id,
+void RoME::AddPartialXYH(const Eigen::Vector3d &rel_pose, const int origin_id,
                          const int dest_id) const {
   // rename AddPartial2D(...)?
   rome::pose_pose_xyh_t message;
@@ -54,31 +54,29 @@ void RoME::AddPartialXYH(const Pose2d &rel_pose, const int origin_id,
   message.node_2_id = dest_id;
   message.delta_x = rel_pose.x();
   message.delta_y = rel_pose.y();
-  message.delta_yaw = rel_pose.yaw();
+  message.delta_yaw = rel_pose.z();
 
   message.var_x = message.var_y = message.var_yaw = 1.0;
 
   lcm::LCM lcm_node;
-  lcm_node.publish("ROME_FACTORS", &message);
+  lcm_node.publish("ROME_PARTIAL_XYH", &message);
 };
 
-void RoME::AddPriorZPR(double z, double pitch, double roll, double var_z,
-                       double var_pitch, double var_roll,
-                       const int pose_id) const {
+void RoME::AddPriorZPR(const Eigen::Vector3d &v, const int pose_id) const {
   // adds a prior in Z, pitch, and roll
   rome::prior_zpr_t message;
 
   message.utime = 0;
   message.id = pose_id;
-  message.z = z;
-  message.pitch = pitch;
-  message.roll = roll;
-  message.var_z = var_z;
-  message.var_pitch = var_pitch;
-  message.var_roll = var_roll;
+  message.z = v.x();
+  message.pitch = v.y();
+  message.roll = v.z();
+  message.var_z = 0.1;
+  message.var_pitch = 0.1;
+  message.var_roll = 0.1;
 
   lcm::LCM lcm_node;
-  lcm_node.publish("ROME_FACTORS", &message);
+  lcm_node.publish("ROME_PARTIAL_ZPR", &message);
 };
 
 void RoME::AddPose3Pose3NH(const Eigen::Vector3d &rel_position,

@@ -1,5 +1,5 @@
 #pragma once
-#include<vector>
+#include <vector>
 
 #include <Eigen/Dense>
 
@@ -27,7 +27,9 @@ public:
   ~Pose3d(){};
 
   std::vector<double> Vector(void) const {
-    std::vector<double> v = { position_.x(), position_.y(), position_.z(), orientation_.w(), orientation_.x(), orientation_.y(), orientation_.z()};
+    std::vector<double> v = {
+        position_.x(),    position_.y(),    position_.z(),   orientation_.w(),
+        orientation_.x(), orientation_.y(), orientation_.z()};
     return v;
   }
 
@@ -35,7 +37,6 @@ public:
   double x() const { return position_.x(); };
   double y() const { return position_.y(); };
   double z() const { return position_.z(); };
-
   double qw() const { return orientation_.w(); };
   double qx() const { return orientation_.x(); };
   double qy() const { return orientation_.y(); };

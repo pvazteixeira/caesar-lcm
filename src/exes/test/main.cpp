@@ -11,106 +11,110 @@
 #include <pcl/point_types.h>
 
 #include <rome/rome.hpp>
-
 /*
-0:
-Pose3d: (18.6099, 2.22993, 6.87; 2.08567, -0.0300105, 0.148694)
-t = 18.6099, 2.22993, 6.87
-q = 0.503288, 0.0244895, -0.0716953, 0.860791
+[debug] Adding submap to map...i=0:
+        Eigen::Vector3d pos1(8.7481, 7.51, 4.5662);
+        Eigen::Quaterniond q1(0.9939, -0.0280019, -0.00824962, -0.106355);
 
-1:
-Pose3d: (13.9014, 0.0904617, 6.85; 2.11352, -0.00637565, 0.167041)
-t = 13.9014, 0.0904617, 6.85
-q = 0.490211, 0.0382526, -0.074204, 0.867596
-XYH:   0.45566   5.08974      0.0240488
-ZPR:   6.85      -0.00637565  0.167041
+        Eigen::Vector3d pos2(9.43, 11.0879, 4.9);
+        Eigen::Quaterniond q2(0.992387, 0.0575732, -0.00698004, -0.108645);
+  Eigen::Vector3 xyh2(-0.0884074, 3.64126, 0; -0.00556528, 0, 0);
+        Eigen::Vector3 zpr2(      4.9,-0.00134375,   0.116047);
 
-2:
-Pose3d: (12.1801, -0.43, 7.79993; 2.10485, -0.0118666, 0.163867)
-t = 12.1801, -0.43, 7.79993
-q = 0.494217, 0.0354126, -0.0740187, 0.865457
-XYH:    0.449375     1.87598 -0.00763192
-ZPR:    7.79993 -0.0118666   0.163867
+        Eigen::Vector3d pos3(9.94, 15.1484, 4.8792)
+        Eigen::Quaterniond q3(0.997597, 0.0563353, -0.0115003, -0.0386678
+  Eigen::Vector3 xyh3(-0.380935, 4.0746, 0; 0.139626, 0, 0);
+        Eigen::Vector3 zpr3(  4.8792,-0.0185897,  0.113553);
 
-3:
-Pose3d: (15.7593, 1.16965, 7.82; 2.04727, -0.0165574, 0.0860389)
-t = 15.7593, 1.16965, 7.82
-q = 0.52007, 0.0153104, -0.0410293, 0.853
-XYH:  -0.444757   -3.83878 -0.0560354
-ZPR:       7.82 -0.0165574  0.0860389
+        Eigen::Vector3d pos4(9.93104, 14.5831, 5.8)
+        Eigen::Quaterniond q4(0.997626, 0.0336346, -0.011705, -0.0589371
+  Eigen::Vector3 xyh4(0.0354154, -0.564254, 0; -0.0401426, 0, 0)
+        Eigen::Vector3 zpr4(    5.8,-0.019391,0.0685557);
 
-4:
-Pose3d: (19.8287, 3.11935, 7.83065; 2.10138, -0.00818067, 0.104991)
-t = 19.8287, 3.11935, 7.83065
-q = 0.49647, 0.0225321, -0.0475625, 0.866457
-XYH: -0.133697  -4.49257 0.0531888
-ZPR:     7.83065 -0.00818067    0.104991
- */
+        Eigen::Vector3d pos5(9.12, 10.1615, 5.84927)
+        Eigen::Quaterniond q5(0.998351, 0.0362801, -0.00973871, -0.0434122
+  Eigen::Vector3 xyh5(-0.281789, -4.48658, 0; 0.0311713, 0, 0)
+        Eigen::Vector3 zpr5(5.84927,-0.016296,0.0733617);
+*/
 
 int main(int argCount, char **argValues) {
 
+  // OK
+  Eigen::Vector3d pos1(8.7481, 7.51, 4.5662);
+  Eigen::Quaterniond q1(0.9939, -0.0280019, -0.00824962, -0.106355);
+
+  // OK
+  Eigen::Vector3d pos2(9.43, 11.0879, 4.9);
+  Eigen::Quaterniond q2(0.992387, 0.0575732, -0.00698004, -0.108645);
+  // 
+  Eigen::Vector3d xyh2(-0.0884074, 3.64126, -0.00556528);
+  Eigen::Vector3d zpr2(4.9, -0.00134375, 0.116047);
+
+  // OK
+  Eigen::Vector3d pos3(9.94, 15.1484, 4.8792);
+  Eigen::Quaterniond q3(0.997597, 0.0563353, -0.0115003, -0.0386678);
+  // 
+  Eigen::Vector3d xyh3(-0.380935, 4.0746, 0.139626);
+  Eigen::Vector3d zpr3(4.8792, -0.0185897, 0.113553);
+
+  // OK
+  Eigen::Vector3d pos4(9.93104, 14.5831, 5.8);
+  Eigen::Quaterniond q4(0.997626, 0.0336346, -0.011705, -0.0589371);
+  Eigen::Vector3d xyh4(0.0354154, -0.564254, -0.0401426);
+  Eigen::Vector3d zpr4(5.8, -0.019391, 0.0685557);
+
+  // OK
+  Eigen::Vector3d pos5(9.12, 10.1615, 5.84927);
+  Eigen::Quaterniond q5(0.998351, 0.0362801, -0.00973871, -0.0434122);
+  //
+  Eigen::Vector3d xyh5(-0.281789, -4.48658, 0.0311713);
+  Eigen::Vector3d zpr5(5.84927, -0.016296, 0.0733617);
+
+  std::vector<Eigen::Vector3d> position = {pos1, pos2, pos3, pos4, pos5};
+  std::vector<Eigen::Quaterniond> orientation = {q1, q2, q3, q4, q5};
+  std::vector<Eigen::Vector3d> prior = {zpr2, zpr3, zpr4, zpr5};
+  std::vector<Eigen::Vector3d> odometry = {xyh2, xyh3, xyh4, xyh5};
+
+  pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(
+      new pcl::PointCloud<pcl::PointXYZRGB>);
+  
   RoME::RoME rome;
 
-  std::clog << "Adding pose 1...";
-  RoME::Pose3d pose_1(16.3, 1.15, 5.78, 0.478507, 0.0306824, -0.0719457,
-                      0.874593);
-  rome.AddOdometry(pose_1, 1, 1);
-  std::clog << "done.\n";
-  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  for (int i = 0; i < 5; ++i) {
 
-  std::clog << "Adding pose 2...";
-  RoME::Pose3d pose_2(-0.341546, -2.64716, 0.412176, 0.996592, 0.0414649,
-                      0.01563, 0.069579);
-  rome.AddOdometry(pose_2, 1, 2);
-  std::clog << "done.\n";
-  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    int id = i + 1;
+    std::clog << "Adding pose " << i << "...";
+    RoME::Pose3d pose(position[i], orientation[i]);
+    rome.AddPose(pose, id);
+    std::clog << "done.\n";
 
-  std::clog << "Adding pose 3...";
-  RoME::Pose3d pose_3(-0.687755, -2.45876, 0.570817, 0.998815, -0.0171313,
-                      0.0152455, 0.0429151);
-  rome.AddOdometry(pose_3, 2, 3);
-  std::clog << "done.\n";
-  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    if (i > 0) {
+      std::clog << "Adding ZPR prior...";
+      rome.AddPriorZPR(prior[i - 1], id);
+      std::clog << "done.\n";
 
-  std::clog << "Adding pose 4...";
-  RoME::Pose3d pose_4(-1.14993, -2.85719, 0.579899, 0.997835, -0.0112134,
-                      -0.0134271, -0.0633934);
-  rome.AddOdometry(pose_4, 3, 4);
-  std::clog << "done.\n";
-  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      std::clog << "Adding odometry...";
+      rome.AddPartialXYH(odometry[i - 1], id - 1, id);
+      std::clog << "done.\n";
+    }
 
-  std::clog << "Adding cloud 1...";
-  pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud1(
-      new pcl::PointCloud<pcl::PointXYZRGB>);
+    std::clog << "Adding cloud " << i << "...";
+    std::string filename = "../../data/" + std::to_string(i) + ".pcd";
+    pcl::io::loadPCDFile<pcl::PointXYZRGB>(filename, *cloud);
+    rome.AddCloud(cloud, i + 1);
+    std::clog << "done.\n";
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  }
 
-  pcl::io::loadPCDFile<pcl::PointXYZRGB>("../../data/0.pcd", *cloud1);
-  rome.AddCloud(cloud1, 1);
-  std::clog << "done.\n";
-  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  // for (int i = 0; i < 5; ++i) {
+  //   std::clog << "Adding cloud " << i << "...";
+  //   std::string filename = "../../data/" + std::to_string(i) + ".pcd";
+  //   pcl::io::loadPCDFile<pcl::PointXYZRGB>(filename, *cloud);
+  //   rome.AddCloud(cloud, i + 1);
+  //   std::clog << "done.\n";
+  //   std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  // }
 
-  std::clog << "Adding cloud 2...";
-  pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud2(
-      new pcl::PointCloud<pcl::PointXYZRGB>);
-  pcl::io::loadPCDFile<pcl::PointXYZRGB>("../../data/1.pcd", *cloud2);
-  rome.AddCloud(cloud2, 2);
-  std::clog << "done.\n";
-  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
-  std::clog << "Adding cloud 3...";
-  pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud3(
-                                                new pcl::PointCloud<pcl::PointXYZRGB>);
-  pcl::io::loadPCDFile<pcl::PointXYZRGB>("../../data/2.pcd", *cloud3);
-  rome.AddCloud(cloud3, 3);
-  std::clog << "done.\n";
-  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
-  std::clog << "Adding cloud 4...";
-  pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud4(
-                                                new pcl::PointCloud<pcl::PointXYZRGB>);
-  pcl::io::loadPCDFile<pcl::PointXYZRGB>("../../data/3.pcd", *cloud4);
-  rome.AddCloud(cloud4, 4);
-  std::clog << "done.\n";
-  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
+  // we're done here
   std::clog << "Exiting.\n\n";
 }
