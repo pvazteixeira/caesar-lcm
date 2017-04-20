@@ -14,19 +14,19 @@
 
 #include "Pose2d.hpp"
 #include "Pose3d.hpp"
-#include <lcmtypes/rome.hpp>
+#include <lcmtypes/caesar.hpp>
 // let's try and keep this stateless, yes?
 // although it would be nice to have a way to get pose updates.
 // look at caesar/examples/database/python/neo4j_interact.py for API ideas
 // [[file+emacs:~/.julia/v0.5/Caesar/examples/database/python/neo4j_interact.py][neo4j_interact.py]]
 
-namespace RoME {
+namespace Caesar {
 
-class RoME {
+class Caesar {
 
 public:
-  RoME(){};
-  ~RoME(){};
+  Caesar(){};
+  ~Caesar(){};
 
   void AddPose(const Pose3d &pose, const int pose_id) const;
 
@@ -43,7 +43,6 @@ public:
                        const Eigen::MatrixXd &Sigma, const int origin_id,
                        const int dest_id) const;
 
-  // this method alone makes this a Caesar client instead of just RoME.
   void AddCloud(pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud,
                 const int pose_id) const;
 

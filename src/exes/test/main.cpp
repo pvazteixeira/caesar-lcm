@@ -3,14 +3,14 @@
 #include <thread>
 
 #include <lcm/lcm-cpp.hpp>
-#include <lcmtypes/rome.hpp>
+#include <lcmtypes/caesar.hpp>
 
 #include <Eigen/Dense>
 
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 
-#include <rome/rome.hpp>
+#include <caesar/caesar.hpp>
 /*
 [debug] Adding submap to map...i=0:
         Eigen::Vector3d pos1(8.7481, 7.51, 4.5662);
@@ -78,42 +78,33 @@ int main(int argCount, char **argValues) {
   pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(
       new pcl::PointCloud<pcl::PointXYZRGB>);
   
-  RoME::RoME rome;
+  Caesar::Caesar caesar;
 
   for (int i = 0; i < 5; ++i) {
 
     int id = i + 1;
     std::clog << "Adding pose " << i << "...";
-    RoME::Pose3d pose(position[i], orientation[i]);
-    rome.AddPose(pose, id);
+    Caesar::Pose3d pose(position[i], orientation[i]);
+    caesar.AddPose(pose, id);
     std::clog << "done.\n";
 
     if (i > 0) {
       std::clog << "Adding ZPR prior...";
-      rome.AddPriorZPR(prior[i - 1], id);
+      caesar.AddPriorZPR(prior[i - 1], id);
       std::clog << "done.\n";
 
       std::clog << "Adding odometry...";
-      rome.AddPartialXYH(odometry[i - 1], id - 1, id);
+      caesar.AddPartialXYH(odometry[i - 1], id - 1, id);
       std::clog << "done.\n";
     }
 
     std::clog << "Adding cloud " << i << "...";
     std::string filename = "../../data/" + std::to_string(i) + ".pcd";
     pcl::io::loadPCDFile<pcl::PointXYZRGB>(filename, *cloud);
-    rome.AddCloud(cloud, i + 1);
+    caesar.AddCloud(cloud, i + 1);
     std::clog << "done.\n";
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   }
-
-  // for (int i = 0; i < 5; ++i) {
-  //   std::clog << "Adding cloud " << i << "...";
-  //   std::string filename = "../../data/" + std::to_string(i) + ".pcd";
-  //   pcl::io::loadPCDFile<pcl::PointXYZRGB>(filename, *cloud);
-  //   rome.AddCloud(cloud, i + 1);
-  //   std::clog << "done.\n";
-  //   std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-  // }
 
   // we're done here
   std::clog << "Exiting.\n\n";

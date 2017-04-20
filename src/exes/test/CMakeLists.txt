@@ -23,7 +23,7 @@ add_definitions(${PCL_DEFINITIONS})
 # 3. pkg-config packages
 find_package(Boost COMPONENTS system REQUIRED)
 
-set(REQUIRED_PACKAGES eigen3 lcm rome )
+set(REQUIRED_PACKAGES eigen3 lcm caesar )
 
 pods_use_pkg_config_packages(${EXE_NAME} ${REQUIRED_PACKAGES})
 

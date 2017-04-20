@@ -2,7 +2,7 @@
 file(GLOB implementation_files *.c *.cpp)
 file(GLOB header_files *.h *.hpp)
 
-set(LIBRARY_NAME rome)
+set(LIBRARY_NAME caesar)
 
 add_library(${LIBRARY_NAME} SHARED ${implementation_files})
 

@@ -3,7 +3,7 @@
 
 #include <Eigen/Dense>
 
-namespace RoME {
+namespace Caesar {
 
 class Pose3d {
 public:

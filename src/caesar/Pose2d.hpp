@@ -2,7 +2,7 @@
 
 #include <Eigen/Dense>
 
-namespace RoME {
+namespace Caesar {
 
 class Pose2d {
 public:
