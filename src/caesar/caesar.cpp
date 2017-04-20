@@ -58,7 +58,7 @@ void Caesar::AddPartialXYH(const Eigen::Vector3d &rel_pose, const int origin_id,
   message.delta_y = rel_pose.y();
   message.delta_yaw = rel_pose.z();
 
-  message.var_x = message.var_y = 1.0;
+  message.var_x = message.var_y = 1.0e-2;
   message.var_yaw = 1.0e-2;
 
   lcm::LCM lcm_node;
