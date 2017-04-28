@@ -65,6 +65,28 @@ void Caesar::AddPartialXYH(const Eigen::Vector3d &rel_pose, const int origin_id,
   lcm_node.publish("CAESAR_PARTIAL_XYH", &message);
 };
 
+void Caesar::AddPartialXYHNH(const Eigen::Vector3d &rel_pose, const int origin_id,
+                             const int dest_id, const double confidence ) const {
+  // rename AddPartial2D(...)?
+  caesar::pose_pose_xyh_nh_t message;
+
+  message.utime = 0;
+  message.node_1_utime = message.node_2_utime = 0;
+  message.node_1_id = origin_id;
+  message.node_2_id = dest_id;
+  message.delta_x = rel_pose.x();
+  message.delta_y = rel_pose.y();
+  message.delta_yaw = rel_pose.z();
+
+  message.var_x = message.var_y = 1.0e-2;
+  message.var_yaw = 1.0e-2;
+
+  message.confidence = confidence;
+
+  lcm::LCM lcm_node;
+  lcm_node.publish("CAESAR_PARTIAL_XYH_NH", &message);
+};
+
 void Caesar::AddPriorZPR(const Eigen::Vector3d &v, const int pose_id) const {
   // adds a prior in Z, pitch, and roll
   caesar::prior_zpr_t message;
@@ -84,13 +106,33 @@ void Caesar::AddPriorZPR(const Eigen::Vector3d &v, const int pose_id) const {
 
 void Caesar::AddPose3Pose3NH(const Eigen::Vector3d &rel_position,
                              const Eigen::Quaterniond &rel_orientation,
-                             const Eigen::MatrixXd &Sigma, const int origin_id,
-                             const int dest_id) const {
-  // will be implemented
+                             const int origin_id, const int dest_id,
+                             const double confidence) const {
   caesar::pose_pose_nh_t message;
 
+  message.utime = 0;
+  message.node_1_utime = 0;
+  message.node_1_id = origin_id;
+
+  message.node_2_utime = 0;
+  message.node_2_id = dest_id;
+
+  message.mean_dim = 7;
+  std::vector<double> mean = {rel_position.x(),    rel_position.y(),
+                              rel_position.z(),    rel_orientation.w(),
+                              rel_orientation.x(), rel_orientation.y(),
+                              rel_orientation.z()};
+  message.mean = mean;
+
+  message.covar_dim = 6;
+  std::vector<double> covar_diag = {1.0e-2, 1.0e-2, 1.0e-2,
+                                    1.0e-2, 1.0e-2, 1.0e-2};
+  message.covar = covar_diag;
+
+  message.confidence = confidence;
+
   lcm::LCM lcm_node;
-  lcm_node.publish("CAESAR_FACTORS", &message);
+  lcm_node.publish("CAESAR_P3P3NH", &message);
 };
 
 void Caesar::AddCloud(pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud,

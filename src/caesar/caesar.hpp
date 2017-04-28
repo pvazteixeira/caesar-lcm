@@ -34,18 +34,20 @@ public:
                    const int destination_id) const;
 
   void AddPartialXYH(const Eigen::Vector3d &rel_pose, const int origin_id,
-                           const int dest_id) const ;
+                     const int dest_id) const;
 
-  void AddPriorZPR(const Eigen::Vector3d &v, const int pose_id) const ;
+  void AddPartialXYHNH(const Eigen::Vector3d &rel_pose, const int origin_id,
+                       const int dest_id,const double confidence = 0.5) const;
+
+  void AddPriorZPR(const Eigen::Vector3d &v, const int pose_id) const;
 
   void AddPose3Pose3NH(const Eigen::Vector3d &rel_position,
                        const Eigen::Quaterniond &rel_orientation,
-                       const Eigen::MatrixXd &Sigma, const int origin_id,
-                       const int dest_id) const;
+                       const int origin_id, const int dest_id,
+                       const double confidence = 0.5) const;
 
   void AddCloud(pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud,
                 const int pose_id) const;
-
 private:
 };
 };
