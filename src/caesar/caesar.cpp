@@ -22,6 +22,16 @@ void Caesar::AddPose(const Pose3d &pose, const int pose_id) const {
 
 void Caesar::AddOdometry(const Pose3d &delta_pose, const int origin_id,
                          const int destination_id) const {
+
+  Eigen::VectorXd covar;
+  // default odometry: std dev of 0.1 m in XYZ and 5.7 degrees in YPR
+  covar << 1.0e-2, 1.0e-2, 1.0e-2, 1.0e-2, 1.0e-2, 1.0e-2;
+  AddOdometry(delta_pose, covar, origin_id, destination_id);
+}
+
+void Caesar::AddOdometry(const Pose3d &delta_pose,
+                         const Eigen::VectorXd &covars, const int origin_id,
+                         const int destination_id) const {
   caesar::pose_pose_nh_t message;
   message.utime = 0;
 
@@ -34,9 +44,11 @@ void Caesar::AddOdometry(const Pose3d &delta_pose, const int origin_id,
   message.mean_dim = 7;
   std::vector<double> odometry = delta_pose.Vector();
   message.mean = odometry;
+
   message.covar_dim = 6;
-  std::vector<double> covar_diag = {1.0e-2, 1.0e-2, 1.0e-2,
-                                    1.0e-2, 1.0e-2, 1.0e-2};
+
+  std::vector<double> covar_diag = {covars(0), covars(1), covars(2),
+                                    covars(3), covars(4), covars(5)};
   message.covar = covar_diag;
 
   message.confidence = 1.0;
@@ -46,6 +58,14 @@ void Caesar::AddOdometry(const Pose3d &delta_pose, const int origin_id,
 };
 
 void Caesar::AddPartialXYH(const Eigen::Vector3d &rel_pose, const int origin_id,
+                           const int dest_id) const {
+  Eigen::Vector3d covars;
+  covars << 1.0e-2, 1.0e-2, 1.0e-2;
+  AddPartialXYH(rel_pose, covars, origin_id, dest_id);
+}
+
+void Caesar::AddPartialXYH(const Eigen::Vector3d &rel_pose,
+                           const Eigen::Vector3d &covars, const int origin_id,
                            const int dest_id) const {
   // rename AddPartial2D(...)?
   caesar::pose_pose_xyh_t message;
@@ -58,15 +78,25 @@ void Caesar::AddPartialXYH(const Eigen::Vector3d &rel_pose, const int origin_id,
   message.delta_y = rel_pose.y();
   message.delta_yaw = rel_pose.z();
 
-  message.var_x = message.var_y = 1.0e-2;
-  message.var_yaw = 1.0e-2;
+  message.var_x = covars(0);
+  message.var_y = covars(1);
+  message.var_yaw = covars(2);
 
   lcm::LCM lcm_node;
   lcm_node.publish("CAESAR_PARTIAL_XYH", &message);
 };
 
-void Caesar::AddPartialXYHNH(const Eigen::Vector3d &rel_pose, const int origin_id,
-                             const int dest_id, const double confidence ) const {
+void Caesar::AddPartialXYHNH(const Eigen::Vector3d &rel_pose,
+                             const int origin_id, const int dest_id,
+                             const double confidence) const {
+  Eigen::Vector3d covars;
+  covars << 1.0e-2, 1.0e-2, 1.0e-2;
+  AddPartialXYHNH(rel_pose, covars, origin_id, dest_id);
+}
+
+void Caesar::AddPartialXYHNH(const Eigen::Vector3d &rel_pose,
+                             const Eigen::Vector3d &covars, const int origin_id,
+                             const int dest_id, const double confidence) const {
   // rename AddPartial2D(...)?
   caesar::pose_pose_xyh_nh_t message;
 
@@ -78,8 +108,9 @@ void Caesar::AddPartialXYHNH(const Eigen::Vector3d &rel_pose, const int origin_i
   message.delta_y = rel_pose.y();
   message.delta_yaw = rel_pose.z();
 
-  message.var_x = message.var_y = 1.0e-2;
-  message.var_yaw = 1.0e-2;
+  message.var_x = covars(0);
+  message.var_y = covars(1);
+  message.var_yaw = covars(2);
 
   message.confidence = confidence;
 
@@ -88,17 +119,27 @@ void Caesar::AddPartialXYHNH(const Eigen::Vector3d &rel_pose, const int origin_i
 };
 
 void Caesar::AddPriorZPR(const Eigen::Vector3d &v, const int pose_id) const {
+  Eigen::Vector3d covars;
+  // std dev of .01 m in Z, ~.57 degrees in roll, pitch
+  covars << 1.0e-4, 1.0e-4, 1.0e-4;
+  AddPriorZPR(v,covars,pose_id);
+}
+
+void Caesar::AddPriorZPR(const Eigen::Vector3d &v, const Eigen::Vector3d &vars,
+                         const int pose_id) const {
   // adds a prior in Z, pitch, and roll
   caesar::prior_zpr_t message;
 
   message.utime = 0;
   message.id = pose_id;
+
   message.z = v.x();
   message.pitch = v.y();
   message.roll = v.z();
-  message.var_z = 1.0e-2;
-  message.var_pitch = 1.0e-4;
-  message.var_roll = 1.0e-4;
+
+  message.var_z = vars(0);
+  message.var_pitch = vars(1);
+  message.var_roll = vars(2);
 
   lcm::LCM lcm_node;
   lcm_node.publish("CAESAR_PARTIAL_ZPR", &message);
