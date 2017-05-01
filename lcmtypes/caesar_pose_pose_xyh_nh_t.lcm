@@ -1,6 +1,6 @@
 package caesar;
 
-struct pose_pose_xyh_t {
+struct pose_pose_xyh_nh_t {
 
   int64_t utime; // unix time associated with this pose
 
