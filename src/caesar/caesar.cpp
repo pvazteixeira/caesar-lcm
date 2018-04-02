@@ -45,7 +45,6 @@ void Caesar::AddOdometry(const Pose3d &delta_pose,
   message.mean = odometry;
 
   message.covar_dim = 6;
-
   std::vector<double> covar_diag = {covars(0), covars(1), covars(2),
                                     covars(3), covars(4), covars(5)};
   message.covar = covar_diag;
