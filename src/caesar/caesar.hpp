@@ -15,10 +15,6 @@
 #include "Pose2d.hpp"
 #include "Pose3d.hpp"
 #include <lcmtypes/caesar.hpp>
-// let's try and keep this stateless, yes?
-// although it would be nice to have a way to get pose updates.
-// look at caesar/examples/database/python/neo4j_interact.py for API ideas
-// [[file+emacs:~/.julia/v0.5/Caesar/examples/database/python/neo4j_interact.py][neo4j_interact.py]]
 
 namespace Caesar {
 

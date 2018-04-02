@@ -77,7 +77,7 @@ int main(int argCount, char **argValues) {
 
   pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(
       new pcl::PointCloud<pcl::PointXYZRGB>);
-  
+
   Caesar::Caesar caesar;
 
   for (int i = 0; i < 5; ++i) {

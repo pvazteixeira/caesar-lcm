@@ -22,9 +22,8 @@ void Caesar::AddPose(const Pose3d &pose, const int pose_id) const {
 
 void Caesar::AddOdometry(const Pose3d &delta_pose, const int origin_id,
                          const int destination_id) const {
-
-  Eigen::VectorXd covar;
   // default odometry: std dev of 0.1 m in XYZ and 5.7 degrees in YPR
+  Eigen::VectorXd covar(6);
   covar << 1.0e-2, 1.0e-2, 1.0e-2, 1.0e-2, 1.0e-2, 1.0e-2;
   AddOdometry(delta_pose, covar, origin_id, destination_id);
 }
@@ -176,7 +175,7 @@ void Caesar::AddPose3Pose3NH(const Eigen::Vector3d &rel_position,
   lcm_node.publish("CAESAR_P3P3NH", &message);
 };
 
-void Caesar::AddCloud(pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud,
+void Caesar::AddCloud(pcl::PointCloud<pcl::PointXYZRGBNormal>::Ptr cloud,
                       const int pose_id) const {
   caesar::point_cloud_t point_cloud_message;
 
@@ -185,7 +184,7 @@ void Caesar::AddCloud(pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud,
 
   point_cloud_message.n = cloud->points.size();
   for (int i = 0; i < cloud->points.size(); ++i) {
-    pcl::PointXYZRGB pt = cloud->points[i];
+    pcl::PointXYZRGBNormal pt = cloud->points[i];
     std::vector<double> ptv = {pt.x, pt.y, pt.z};
     std::vector<uint8_t> ptc = {pt.r, pt.g, pt.b};
     point_cloud_message.points.push_back(ptv);
