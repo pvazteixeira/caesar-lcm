@@ -1,4 +1,5 @@
 language: cpp
+sudo: required
 
 before_install:
   - sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl -y
