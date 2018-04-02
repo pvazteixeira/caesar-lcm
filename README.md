@@ -4,9 +4,9 @@ A C++ interface for [Caesar.jl](https://github.com/dehann/Caesar.jl) over [LCM](
 
 ## Dependencies
 
-* [Eigen]() - `libeigen3-dev`
-* [LCM]() - 
-* [PCL]() - `libpcl-dev`
+* [Eigen](https://eigen.tuxfamily.org) - `libeigen3-dev`
+* [LCM](http://lcm-proj.github.io)
+* [PCL](http://pointclouds.org/) - `libpcl-dev`
 
 ## Installation
 
