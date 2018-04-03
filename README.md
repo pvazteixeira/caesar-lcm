@@ -2,6 +2,8 @@
 
 A C++ interface for [Caesar.jl](https://github.com/dehann/Caesar.jl) over [LCM](https://lcm-proj.github.io).
 
+[![Build Status](https://travis-ci.org/pvazteixeira/caesar-lcm.svg?branch=master)](https://travis-ci.org/pvazteixeira/caesar-lcm)
+
 ## Dependencies
 
 * [Eigen](https://eigen.tuxfamily.org) - `libeigen3-dev`
