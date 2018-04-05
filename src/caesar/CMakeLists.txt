@@ -21,7 +21,7 @@ add_definitions(${PCL_DEFINITIONS})
 # set(REQUIRED_LIBS $F
 
 # 3. pkg-config libraries
-set(REQUIRED_PACKAGES eigen3)
+set(REQUIRED_PACKAGES eigen3 lcmtypes_caesar-lcmtypes)
 pods_use_pkg_config_packages(${LIBRARY_NAME} ${REQUIRED_PACKAGES})
 
 # install library

@@ -14,7 +14,7 @@
 
 #include "Pose2d.hpp"
 #include "Pose3d.hpp"
-#include <lcmtypes/caesar.hpp>
+#include <lcmtypes/caesar_lcmtypes.hpp>
 
 namespace Caesar {
 

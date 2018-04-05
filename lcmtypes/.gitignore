@@ -1,8 +1,0 @@
-# ignore everything except lcm type specifications
-!*.lcm
-
-# ignore bindings
-c/
-cpp/
-java/
-python/
