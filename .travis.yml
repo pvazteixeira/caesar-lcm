@@ -7,12 +7,12 @@ addons:
     packages:
     - libeigen3-dev
 
-# before_install:
-  # - ./install-lcm.sh
-  # - sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl -y
-  # - sudo apt-get -qq update
-  # - sudo apt-get install -y libeigen3-dev
-  # - sudo apt-get install -y libpcl-all
+before_install:
+  - ./install-lcm.sh
+  - sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl -y
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libeigen3-dev
+  - sudo apt-get install -y libpcl-all
 
 before_script:
   - git clone https://github.com/JuliaRobotics/CaesarLCMTypes.jl.git ../CaesarLCMTypes.jl
@@ -20,10 +20,11 @@ before_script:
   - echo "caesar-lcm" >> ../tobuild.txt
   - wget https://gist.githubusercontent.com/pvazteixeira/88fbc9cd63c07c4620c40bc9d45c176f/raw/b48c1e7104c1367d03e548fe0e2e2dece36b7b04/Makefile
   - mv Makefile ..
+  - mkdir -p ../build
   - ls ..
 
 script:
-  # - make -C".."
+  - make -C".." BUILD_PREFIX="../build"
 
 notifications:
   email: false
