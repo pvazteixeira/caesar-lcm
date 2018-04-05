@@ -1,20 +1,25 @@
 language: cpp
 sudo: required
 distro: xenial
-script: make
 
 addons:
   apt:
     packages:
     - libeigen3-dev
 
-before_install:
-  - ./install-lcm.sh
-  - sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl -y
-  - sudo apt-get -qq update
+# before_install:
+  # - ./install-lcm.sh
+  # - sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl -y
+  # - sudo apt-get -qq update
   # - sudo apt-get install -y libeigen3-dev
-  - sudo apt-get install -y libpcl-all
+  # - sudo apt-get install -y libpcl-all
 
 before_script:
-  - echo "ET phone home, `pwd`"
-  - touch ../testfile
+  - git clone https://github.com/JuliaRobotics/CaesarLCMTypes.jl.git ../CaesarLCMTypes.jl
+  - echo "CaesarLCMTypes.jl" > ../tobuild.txt
+  - echo "caesar-lcm" >> ../tobuild.txt
+  - cat ../tobuild.txt
+
+script:
+  # - make
+  - echo "so much winning!"
