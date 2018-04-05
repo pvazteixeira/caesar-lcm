@@ -18,7 +18,8 @@ before_script:
   - git clone https://github.com/JuliaRobotics/CaesarLCMTypes.jl.git ../CaesarLCMTypes.jl
   - echo "CaesarLCMTypes.jl" > ../tobuild.txt
   - echo "caesar-lcm" >> ../tobuild.txt
-  - wget https://gist.githubusercontent.com/pvazteixeira/88fbc9cd63c07c4620c40bc9d45c176f/raw/b48c1e7104c1367d03e548fe0e2e2dece36b7b04/Makefile ../Makefile
+  - wget https://gist.githubusercontent.com/pvazteixeira/88fbc9cd63c07c4620c40bc9d45c176f/raw/b48c1e7104c1367d03e548fe0e2e2dece36b7b04/Makefile
+  - mv Makefile ..
   - ls ..
 
 script:
