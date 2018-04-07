@@ -10,7 +10,7 @@ add_definitions(-std=c++11)
 
 # 1. cmake-supported libraries
 find_package(PkgConfig REQUIRED)
-find_package(PCL 1.7 REQUIRED COMPONENTS common)
+find_package(PCL 1.7 REQUIRED COMPONENTS common io)
 message("PCL_FOUND=${PCL_FOUND}")
 message("PCL_INCLUDE_DIRS=${PCL_INCLUDE_DIRS}")
 message("PCL_LIBRARY_DIRS=${PCL_LIBRARY_DIRS}")

@@ -12,7 +12,7 @@ before_install:
   - sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl -y
   - sudo apt-get -qq update
   - sudo apt-get install -y libeigen3-dev
-  - sudo apt-get install -y libpcl-common-1.7-dev
+  - sudo apt-get install -y libpcl-common-1.7-dev libpcl-io-1.7-dev
 
 before_script:
   - cd ..
